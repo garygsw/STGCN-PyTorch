@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 
 from stgcn import STGCN
-from utils import get_normalized_adj, load_metr_la_data
+from utils import generate_dataset, get_normalized_adj, load_metr_la_data
 
 
 torch.manual_seed(7)
