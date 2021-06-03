@@ -95,6 +95,7 @@ validation_maes = []
 for epoch in range(epochs):
     loss = train_epoch(train_input, train_target,
                         batch_size=batch_size)
+    #print('epoch:', epoch, 'train loss:', loss)
     training_losses.append(loss)
 
     # Run validation
@@ -105,12 +106,14 @@ for epoch in range(epochs):
 
         out = net(A_wave, val_input)
         val_loss = loss_criterion(out, val_target).to(device="cpu")
+        #print('epoch:', epoch, 'val loss:', val_loss)
         validation_losses.append(np.asscalar(val_loss.detach().numpy()))
 
         out_unnormalized = out.detach().cpu().numpy()*stds[0]+means[0]
         target_unnormalized = val_target.detach().cpu().numpy()*stds[0]+means[0]
         mae = np.mean(np.absolute(out_unnormalized - target_unnormalized))
         validation_maes.append(mae)
+        print('epoch:', epoch, 'val mae:', mae)
 
         out = None
         val_input = val_input.to(device="cpu")
